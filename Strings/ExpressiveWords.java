@@ -11,6 +11,7 @@ class Solution {
         int l1=s.length(),l2=w.length(), i=0,j=0;
         while(i<l1 && j<l2){
             int c1=1,c2=1;
+            // Here increment is crucial, so as to be able to compare with previous char below
             if(s.charAt(i++) != w.charAt(j++))
                 return false;
             while(i<l1 && s.charAt(i)==s.charAt(i-1)){

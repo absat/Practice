@@ -1,6 +1,8 @@
 class Solution {
     public String validateIPv4(String IP) {
         String[] nums = IP.split("\\.",-1);
+        //Argument -1 for split will add empty string for leading and trailing empty strings
+        //Otherwise 1.1.1. will return IPv4 instead of neither, since we will check 3 dots but no check that there are 4 grps
         for(String x: nums){
             if(x.length()==0 || x.length() > 3) return "Neither";
             if(x.charAt(0)=='0'&& x.length()!=1) return "Neither";
