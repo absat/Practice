@@ -29,7 +29,7 @@ class SudokuSolver {
         rows[row][d]++;
         columns[col][d]++;
         boxes[idx][d]++;
-        board[row][col] = (char)(d+'0');
+        board[row][col] = (char)(d+'0');//imp
     }
     
     public void removeNumber(int d, int row, int col){
