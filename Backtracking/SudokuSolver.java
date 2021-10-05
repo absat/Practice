@@ -14,7 +14,7 @@ class SudokuSolver {
     
     public boolean couldPlace(int d, int row, int col){
         /*
-        Check if one could place a number d in (row,col) cell
+        Check if one could place a number d   in (row,col) cell
         */
         int idx = (row/n)*n + col/n;
         return rows[row][d] +columns[col][d]+ boxes[idx][d] == 0;
