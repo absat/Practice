@@ -1,0 +1,21 @@
+class Solution {
+    public boolean canJump(int[] nums) {
+        int targetIndex = nums.length-1;
+        for(int i=nums.length-2;i>=0;i--){
+            if(targetIndex<=i+nums[i]){
+                targetIndex=i;
+            }
+        }
+        if(targetIndex==0)
+            return true;
+        else
+            return false;
+    }
+}
+/*
+ * Educative:
+ * Traverse backwards, start from last, check if each preceding index(greedily so starting from n-1 index then n-2 index, if n is index of last position)
+ * is able to reach to current target, if it is then it becomes the new target, then repeat
+ * SC O(1),
+ * TC O(n)
+ */
