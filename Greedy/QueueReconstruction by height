@@ -1,0 +1,23 @@
+class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b){
+                return a[0] == b[0] ? a[1] - b[1] : b[0] - a[0];
+            }
+        });
+
+        List<int[]> list = new ArrayList<>();
+        for(int[] p: people){
+            list.add(p[1],p);
+        }
+        int n = people.length;
+        return list.toArray(new int[n][2]);
+    }
+}
+
+/*tc sort o nlogn plus traverse array in line 11 elements k times, where k is elems in list list at that time
+so summation of k from k=0 to n-1, which is o of n^2
+so tc finally of n^2
+
+sc o of n for output*/
