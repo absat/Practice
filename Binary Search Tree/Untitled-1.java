@@ -1,0 +1,93 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    Map<Integer,Integer> dep;
+    Map<Integer,Integer> hei;
+    Map<Integer,Queue<Node>> map; 
+    
+    public int[] treeQueries(TreeNode root, int[] queries) {
+        
+        dep = new HashMap<>();   
+        hei = new HashMap<>();
+        map = new HashMap<>();
+        
+        dfs(root, 0);
+        enrichCousins();
+        
+        int[]result = new int[queries.length];
+        for(int i=0;i<queries.length;i++){
+            int val = queries[i];
+            int depth =dep.get(val);
+            
+            Queue<Node> cous = map.get(depth);             
+            if(cous.size()==1) result[i] = depth-1;
+            else {
+                Node first = cous.remove();
+                if(first.val == val){                    
+                    Node second = cous.remove();                     
+                    result[i] = depth+second.height;
+                    cous.add(first);
+                    cous.add(second);
+                }else {                    
+                    result[i]= depth+first.height;
+                    cous.add(first);
+                }
+            }             
+        }
+        return result;
+    }
+    
+   
+    
+    private void enrichCousins(){
+        for(int val : dep.keySet()){
+            int depth = dep.get(val);
+            int height = hei.get(val);
+            if(!map.containsKey(depth)) {
+                Queue<Node> queue = new PriorityQueue<Node>(new Comparator<Node>(){
+                    public int compare(Node a, Node b){
+                        return Integer.compare(b.height, a.height);
+                    }
+                });
+                map.put(depth, queue);
+            }
+            Queue<Node> queue = map.get(depth);
+            queue.add(new Node(val, height));             
+            map.put(depth, queue);         
+        }
+    }
+  
+    
+    private int dfs(TreeNode root, int depth){
+        if(root==null) return -1;
+        dep.put(root.val, depth);
+        int maxHeight = Math.max(dfs(root.left, depth+1), dfs(root.right, depth+1))+1;
+        hei.put(root.val, maxHeight); 
+        return maxHeight;
+    }
+    
+    
+}
+class Node{
+    int val,height;
+    public Node(int val, int height){
+        this.val = val;
+        this.height = height;
+    }
+    public String toString(){
+        return String.format("[%d,%d]", val, height);
+    }
+}
