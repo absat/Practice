@@ -15,7 +15,7 @@ class Solution {
                         sum=(sum+dp[i-l][j-1])%1000000007;
                     }
                 }
-                dp[i][j]=sum%1000000007;
+                dp[i][j]=sum;
             }
         }
 
