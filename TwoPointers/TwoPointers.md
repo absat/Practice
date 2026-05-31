@@ -126,11 +126,85 @@ class Solution {
 }
 ```
 
-# Complexity
 - Time complexity:
 O(nlogn +n^2), so O(n^2)
 - Space complexity:
 O(n), for sorting
 
-Q 3 sum smaller 
+### Q 3 sum smaller 
 
+Given an array of n integers nums and an integer target, find the number of index triplets i, j, k with 0 <= i < j < k < n that satisfy the condition nums[i] + nums[j] + nums[k] < target.
+
+ 
+
+Example 1:
+
+Input: nums = [-2,0,1,3], target = 2
+Output: 2
+Explanation: Because there are two triplets which sums are less than 2:
+[-2,0,1]
+[-2,0,3]
+
+```
+class Solution {
+    public int threeSumSmaller(int[] nums, int target) {
+        int count=0;
+        Arrays.sort(nums);
+        for(int i=0;i<nums.length;i++){
+            int low=i+1,high=nums.length-1;
+            while(low<high){
+                int sum = nums[i]+nums[low]+nums[high];
+                if(sum<target){
+                    count+=high-low;
+                    low++;
+                }
+                else if(sum>=target){
+                    high--;
+                }
+            }
+        }
+        return count;
+    }
+}
+```
+### 3 Sum closest
+
+Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.
+
+Return the sum of the three integers.
+
+You may assume that each input would have exactly one solution.
+
+ 
+
+Example 1:
+
+Input: nums = [-1,2,1,-4], target = 1
+Output: 2
+Explanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+
+```
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        int closestSum = Integer.MAX_VALUE;
+        Arrays.sort(nums);
+        for(int i=0;i<nums.length-2;i++){
+            int low=i+1, high=nums.length-1;
+            while(low<high){
+                int sum = nums[i]+nums[low]+nums[high];
+                int diff = Math.abs(sum-target);
+                closestSum = Math.abs(closestSum-target)>diff?sum:closestSum;
+                if(sum<target){
+                    low++;
+                } else if(sum>target){
+                    high--;
+                } else {
+                    return sum;
+                }
+            }
+        }
+
+        return closestSum;
+    }
+}
+```

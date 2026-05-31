@@ -1,68 +1,60 @@
+import java.util.*;
 class MinStack {
 
     private Stack<Integer> stack = new Stack<>();
-    private Stack<int[]> minStack = new Stack<>();
-    
-    
-    public MinStack() { }
-    
-    
-    public void push(int x) {
+    private Stack<Integer> minStack = new Stack<>();
+
+    public MinStack() {
         
-        // We always put the number onto the main stack.
-        stack.push(x);
-        
-        // If the min stack is empty, or this number is smaller than
-        // the top of the min stack, put it on with a count of 1.
-        if (minStack.isEmpty() || x < minStack.peek()[0]) {
-            minStack.push(new int[]{x, 1});
-        }
-        
-        // Else if this number is equal to what's currently at the top
-        // of the min stack, then increment the count at the top by 1.
-        else if (x == minStack.peek()[0]) {
-            minStack.peek()[1]++;
-        }
     }
     
+    public void push(int val) {
+        stack.push(val);
+        if(minStack.isEmpty() || minStack.peek()>=val){
+            minStack.push(val);
+        }
+    }
+
     
     public void pop() {
-        
-        // If the top of min stack is the same as the top of stack
-        // then we need to decrement the count at the top by 1.
-        if (stack.peek().equals(minStack.peek()[0])) {
-            minStack.peek()[1]--;
-        }
-        
-        // If the count at the top of min stack is now 0, then remove
-        // that value as we're done with it.
-        if (minStack.peek()[1] == 0) {
+        if(stack.peek().equals(minStack.peek())){
             minStack.pop();
         }
-        
-        // And like before, pop the top of the main stack.
         stack.pop();
     }
     
-    
     public int top() {
-        return stack.peek();
+        return stack.peek();       
     }
-
     
     public int getMin() {
-        return minStack.peek()[0];
+        return minStack.peek();       
+    }
+
+    public static void main(String args[]){
+        MinStack minStack = new MinStack();
+        minStack.push(5);
+        minStack.push(1);
+        minStack.push(0);
+        minStack.push(10);
+
+        System.out.println(minStack.top());
+        System.out.println(minStack.getMin());
+        minStack.pop();
+        System.out.println(minStack.getMin());
+        minStack.pop();
+        System.out.println(minStack.getMin());
+        minStack.pop();
+        System.out.println(minStack.getMin());
+
     }
 }
-/*
- * 
- * Let nnn be the total number of operations performed.
 
-Time Complexity : O(1)for all operations.
-
-Same as above.
-
-Space Complexity : O(n)
-
-Same as above.
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
  */

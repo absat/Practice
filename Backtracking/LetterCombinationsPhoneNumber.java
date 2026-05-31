@@ -25,6 +25,3 @@ class Solution {
 
     }
 }
-
-SC: O(M*N)
-TC: O()
